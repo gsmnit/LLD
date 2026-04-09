@@ -1,0 +1,5 @@
+1. add support for dynamic pool size and queue size.
+(too complex specially removing extra threads from pool)
+2. make promise cancellable too. can be done
+how ? make Action TaskHandle. then you can delegate cancellable related calls
+to Action only. simple and effective. Promise needs to extends Taskhandle.
