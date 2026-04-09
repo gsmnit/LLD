@@ -1,4 +1,4 @@
-package abstraction;
+package threadpool.abstraction;
 
 // The receipt given back to the user
 public interface TaskHandle {

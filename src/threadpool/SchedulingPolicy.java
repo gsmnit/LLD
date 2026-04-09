@@ -1,4 +1,4 @@
-package main;
+package threadpool;
 
 public enum SchedulingPolicy {
     FIFO,

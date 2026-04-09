@@ -1,4 +1,4 @@
-package abstraction;
+package threadpool.abstraction;
 
 public interface ThreadPoolLifecycle {
     /**

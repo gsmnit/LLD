@@ -1,6 +1,6 @@
-package main;
+package threadpool;
 
-import abstraction.TaskHandle;
+import threadpool.abstraction.TaskHandle;
 
 public class CancelableTask implements Runnable, TaskHandle {
 
@@ -17,7 +17,7 @@ public class CancelableTask implements Runnable, TaskHandle {
     @Override
     public boolean cancel(boolean mayInterruptIfRunning) {
         if (isCancelled) {
-            return false; // Already cancelled
+            return false; // Already canceled
         }
 
         isCancelled = true;
@@ -38,7 +38,7 @@ public class CancelableTask implements Runnable, TaskHandle {
 
     @Override
     public void run() {
-        // 1. If cancelled while waiting in the queue, abort before starting
+        // 1. If canceled while waiting in the queue, abort before starting
         if (isCancelled) {
             return;
         }

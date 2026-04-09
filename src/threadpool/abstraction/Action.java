@@ -1,12 +1,15 @@
-package abstraction;
+package threadpool.abstraction;
 
-import main.SimplePromise;
 
 import java.util.concurrent.Callable;
 
 public abstract class Action<T> implements Runnable, Callable<T>, Comparable<Action<?>> {
-    private final SimplePromise<T> promise = new SimplePromise<>();
+    private final Promise<T> promise;
     private int priority; // lower number is higher priority
+
+    public Action(Promise<T> promise) {
+        this.promise = promise;
+    }
 
     @Override
     public void run() {
@@ -17,7 +20,7 @@ public abstract class Action<T> implements Runnable, Callable<T>, Comparable<Act
         }
     }
 
-    public SimplePromise<T> getPromise() {
+    public Promise<T> getPromise() {
         return promise;
     }
 

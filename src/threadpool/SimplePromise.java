@@ -1,11 +1,12 @@
-package main;
+package threadpool;
 
+import threadpool.abstraction.Promise;
 import java.util.function.Consumer;
 
 /**
- * A lightweight version of CompletableFuture.
+ * Concrete implementation of a lightweight Promise.
  */
-public class SimplePromise<T> {
+public class SimplePromise<T> implements Promise<T> {
     private T result;
     private Throwable error;
     private boolean isComplete = false;
@@ -14,8 +15,8 @@ public class SimplePromise<T> {
     private Consumer<T> onSuccess;
     private Consumer<Throwable> onError;
 
-    // --- 1. How the consumer ATTACHES callbacks ---
-    public synchronized void then(Consumer<T> onSuccess, Consumer<Throwable> onError) {
+    @Override
+    public void then(Consumer<T> onSuccess, Consumer<Throwable> onError) {
         this.onSuccess = onSuccess;
         this.onError = onError;
 
@@ -25,16 +26,16 @@ public class SimplePromise<T> {
         }
     }
 
-    // --- 2. How the worker thread RESOLVES the promise ---
-    public synchronized void resolve(T result) {
+    @Override
+    public void resolve(T result) {
         if (isComplete) return;
         this.result = result;
         this.isComplete = true;
         triggerCallbacks();
     }
 
-    // --- 3. How the worker thread FAILS the promise ---
-    public synchronized void reject(Exception error) {
+    @Override
+    public void reject(Exception error) {
         if (isComplete) return;
         this.error = error;
         this.isComplete = true;

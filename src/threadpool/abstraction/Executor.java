@@ -1,6 +1,4 @@
-package abstraction;
-
-import main.SimplePromise;
+package threadpool.abstraction;
 
 import java.util.concurrent.Callable;
 
@@ -14,5 +12,5 @@ public interface Executor {
 
     TaskHandle submit(Runnable task) throws InterruptedException;
 
-    <T> SimplePromise<T> submitAndGetPromise(Callable<T> task) throws InterruptedException;
+    <T> Promise<T> submitAndGetPromise(Callable<T> task) throws InterruptedException;
 }

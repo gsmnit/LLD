@@ -1,9 +1,8 @@
-package main;
+package threadpool;
 
-import abstraction.Action;
-import abstraction.Executor;
-import abstraction.TaskHandle;
-import abstraction.ThreadPoolLifecycle;
+import threadpool.abstraction.*;
+import threadpool.abstraction.Executor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -68,12 +67,12 @@ public class FixedThreadPool implements Executor, ThreadPoolLifecycle {
     }
 
     @Override
-    public <T> SimplePromise<T> submitAndGetPromise(Callable<T> task) throws InterruptedException {
+    public <T> Promise<T> submitAndGetPromise(Callable<T> task) throws InterruptedException {
         if (isShutdown) {
             throw new IllegalStateException("Pool is shut down.");
         }
 
-        var actionWrapper = new Action<T>() {
+        var actionWrapper = new Action<T>(new SimplePromise<>()) {
             @Override
             public T call() throws Exception {
                 return task.call();
